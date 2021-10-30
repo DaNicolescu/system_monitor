@@ -1,10 +1,11 @@
 #include "mainwindow.h"
+#include "tabs/generaltab.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     this->tabWidget = new QTabWidget();
-    this->tabWidget->addTab(new QWidget(), "General");
+    this->tabWidget->addTab(new GeneralTab(), "General");
     this->tabWidget->addTab(new QWidget(), "Users");
     this->tabWidget->addTab(new QWidget(), "Processes");
 
@@ -16,5 +17,4 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete this->tabWidget;
 }
