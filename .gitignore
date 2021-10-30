@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Qt specific
+moc_*
+*.pro
+
+# Project specific
+.vscode
+.qmake.stash
+system_monitor
