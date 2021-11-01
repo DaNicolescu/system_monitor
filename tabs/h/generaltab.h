@@ -6,8 +6,16 @@ class GeneralTab : public QWidget
 {
     Q_OBJECT
 
-    QGridLayout *systemGridLayout;
+    QGridLayout *mainGridLayout;
+
     QGroupBox *systemGroupBox;
+    QGridLayout *systemGridLayout;
+
+    QGroupBox *diskGroupBox;
+    QGridLayout *diskGridLayout;
+
+    QGroupBox *memoryGroupBox;
+    QGridLayout *memoryGridLayout;
 
 public:
     explicit GeneralTab(QWidget *parent = nullptr);

@@ -54,13 +54,21 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		mainwindow.cpp \
-		tabs/generaltab.cpp moc_mainwindow.cpp \
-		moc_generaltab.cpp
+		tabs/src/generaltab.cpp \
+		tabs/src/processestab.cpp \
+		tabs/src/userstab.cpp moc_mainwindow.cpp \
+		moc_generaltab.cpp \
+		moc_processestab.cpp \
+		moc_userstab.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		generaltab.o \
+		processestab.o \
+		userstab.o \
 		moc_mainwindow.o \
-		moc_generaltab.o
+		moc_generaltab.o \
+		moc_processestab.o \
+		moc_userstab.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -137,9 +145,13 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		system_monitor.pro mainwindow.h \
-		tabs/generaltab.h main.cpp \
+		tabs/h/generaltab.h \
+		tabs/h/processestab.h \
+		tabs/h/userstab.h main.cpp \
 		mainwindow.cpp \
-		tabs/generaltab.cpp
+		tabs/src/generaltab.cpp \
+		tabs/src/processestab.cpp \
+		tabs/src/userstab.cpp
 QMAKE_TARGET  = system_monitor
 DESTDIR       = 
 TARGET        = system_monitor
@@ -319,8 +331,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h tabs/generaltab.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp tabs/generaltab.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h tabs/h/generaltab.h tabs/h/processestab.h tabs/h/userstab.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp tabs/src/generaltab.cpp tabs/src/processestab.cpp tabs/src/userstab.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -352,18 +364,28 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_generaltab.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_generaltab.cpp moc_processestab.cpp moc_userstab.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_generaltab.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_generaltab.cpp moc_processestab.cpp moc_userstab.cpp
 moc_mainwindow.cpp: mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dani/git/system_monitor/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dani/git/system_monitor -I/home/dani/git/system_monitor -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
-moc_generaltab.cpp: tabs/generaltab.h \
+moc_generaltab.cpp: tabs/h/generaltab.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dani/git/system_monitor/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dani/git/system_monitor -I/home/dani/git/system_monitor -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include tabs/generaltab.h -o moc_generaltab.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dani/git/system_monitor/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dani/git/system_monitor -I/home/dani/git/system_monitor -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include tabs/h/generaltab.h -o moc_generaltab.cpp
+
+moc_processestab.cpp: tabs/h/processestab.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dani/git/system_monitor/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dani/git/system_monitor -I/home/dani/git/system_monitor -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include tabs/h/processestab.h -o moc_processestab.cpp
+
+moc_userstab.cpp: tabs/h/userstab.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/dani/git/system_monitor/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/dani/git/system_monitor -I/home/dani/git/system_monitor -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include tabs/h/userstab.h -o moc_userstab.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -384,17 +406,32 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 main.o: main.cpp mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-mainwindow.o: mainwindow.cpp mainwindow.h
+mainwindow.o: mainwindow.cpp mainwindow.h \
+		tabs/h/generaltab.h \
+		tabs/h/userstab.h \
+		tabs/h/processestab.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
-generaltab.o: tabs/generaltab.cpp tabs/generaltab.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generaltab.o tabs/generaltab.cpp
+generaltab.o: tabs/src/generaltab.cpp tabs/h/generaltab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generaltab.o tabs/src/generaltab.cpp
+
+processestab.o: tabs/src/processestab.cpp tabs/h/processestab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o processestab.o tabs/src/processestab.cpp
+
+userstab.o: tabs/src/userstab.cpp tabs/h/userstab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o userstab.o tabs/src/userstab.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
 moc_generaltab.o: moc_generaltab.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_generaltab.o moc_generaltab.cpp
+
+moc_processestab.o: moc_processestab.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_processestab.o moc_processestab.cpp
+
+moc_userstab.o: moc_userstab.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_userstab.o moc_userstab.cpp
 
 ####### Install
 
