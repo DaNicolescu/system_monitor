@@ -1,3 +1,6 @@
+#ifndef USERSTAB_H
+#define USERSTAB_H
+
 #include <QWidget>
 #include <QGroupBox>
 #include <QGridLayout>
@@ -21,3 +24,5 @@ public:
     explicit UsersTab(QWidget *parent = nullptr);
     ~UsersTab();
 };
+
+#endif

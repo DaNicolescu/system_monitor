@@ -1,3 +1,6 @@
+#ifndef GENERALTAB_H
+#define GENERALTAB_H
+
 #include <QWidget>
 #include <QGroupBox>
 #include <QGridLayout>
@@ -21,3 +24,5 @@ public:
     explicit GeneralTab(QWidget *parent = nullptr);
     ~GeneralTab();
 };
+
+#endif

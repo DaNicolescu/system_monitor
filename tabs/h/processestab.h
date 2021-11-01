@@ -1,3 +1,6 @@
+#ifndef PROCESSESTAB_H
+#define PROCESSESTAB_H
+
 #include <QWidget>
 #include <QGroupBox>
 #include <QGridLayout>
@@ -15,3 +18,5 @@ public:
     explicit ProcessesTab(QWidget *parent = nullptr);
     ~ProcessesTab();
 };
+
+#endif
